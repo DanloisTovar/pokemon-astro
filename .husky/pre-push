@@ -1,3 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 # Aquí puedes añadir los comandos que deseas ejecutar antes del push
+
+echo "Ejecutando pruebas"
+echo "Sin test por ahora"
