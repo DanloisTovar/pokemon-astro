@@ -1,11 +1,13 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+/* plantilla de cabezal de html (apertura y cierre de etiqueta html ) */
+import MainLayout from '../layouts/MainLayout.astro';
+
+/* titulo de la pagina principal: */
+const title = 'Pokemon app creada por Danlois';
+
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title={title}>
+	<h1 class="text-3xl text-blue-500">hola mundo!!</h1>	
+</MainLayout>
