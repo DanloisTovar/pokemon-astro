@@ -1,20 +1,25 @@
 ---
+
+
 /* reset styles */
 import '../styles/Normalizer.css';
-
 /* global styles */
 import '../styles/global.css';
 
-/* definir props */
 
+
+/* definir props */
 interface Props {
 	title: string;
 }
-
+/* destructurar props */
 const{ title }: Props =Astro.props;
 
-
+/* importar componentes: */
+import Navbar from '../components/Pokemons/Navbar.astro';
+import SliderPokemon from '../components/Pokemons/SliderPokemon.astro';
 ---
+
 
 <!doctype html>
 <html lang="es">
@@ -25,9 +30,19 @@ const{ title }: Props =Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class=" bg-slate-800">
-		<slot />
+	<body class="bg-slate-800">
+		<Navbar />
+		<SliderPokemon/>
+		<!-- contenido -->	
+		<div class="container mx-auto">
+
+			<slot />
+		</div>
 	</body>
 </html>
+
+
+<!-- importar bootstrap JS -->
+<script src="../js/main.js"></script>
 
 
