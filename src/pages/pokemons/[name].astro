@@ -1,0 +1,89 @@
+---
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import PokemonCard from "../../components/Pokemons/PokemonCard.astro";
+import Navbar from "../../components/Pokemons/Navbar.astro";
+/*importar interfaces */
+import type { PokemonListResponse } from "../../interfaces/pokemonInterfacesListResponse";
+
+
+/* definir rutas segun el nombre del parametro (rutas dimanicas) */
+export const getStaticPaths = ( async() => {
+
+	const response = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=102');
+	const {results} = await response.json() as PokemonListResponse;
+	
+	/* return [{params: {name: 'pikachu'},props: {url:'https://pokeapi.co/api/v2/pokemon/25/',showName: false}},
+    {params: {name: 'raichu'},props: {url:'https://pokeapi.co/api/v2/pokemon/26/',showName: false}},
+    {params: {name: 'ekans'},props: {url:'https://pokeapi.co/api/v2/pokemon/23/',showName: false}},]; */
+	return results.map(({name,url}) => ({params: {name},props: {url,showName: false}}));
+}) satisfies GetStaticPaths;
+
+/* definir parametro */
+const { name } = Astro.params;
+/* definir el la prop de url */
+const {url,showName} = Astro.props;
+
+/* obtener el id para pokemon */
+const id = url.split('/').at(-2);
+
+const audioCriesSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+
+
+
+
+
+---
+{!showName ? (
+	
+	<div class="bg-slate-800 min-h-screen flex flex-col h-100">
+	 <Navbar/>
+  
+	  <section class="mt-10 mx flex flex-col justify-center items-center">
+		<h1 class="text-5xl capitalize text-blue-600">{name}</h1>
+  
+		<div class="flex items-center justify-center py-4">
+		  <PokemonCard url={url} name={name} showName={false} isBig={true} />
+		</div>
+  
+		<div class="bg-blue-600 p-4 rounded-lg shadow-lg">
+		  <audio controls class="mx-auto">
+			<source src={audioCriesSrc} type="audio/ogg">
+		  </audio>
+		</div>
+  
+		<div class="flex items-center justify-center pt-4">
+		  <!-- Botón -->
+		  <a class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 no-underline" href="/">
+			Regresar
+		  </a>
+		</div>
+	  </section>
+	</div>
+  ) : (
+	<MainLayout title={'algun pokemon'}>
+	  <h1>Algun pokemon</h1>
+  
+	  <section class="mt-10 mx flex flex-col justify-center items-center">
+		<h1 class="text-5xl capitalize text-blue-600">{name}</h1>
+  
+		<div class="flex items-center justify-center py-4">
+		  <PokemonCard url={url} name={name} showName={false} />
+		</div>
+  
+		<div class="bg-blue-600 p-4 rounded-lg shadow-lg">
+		  <audio controls class="mx-auto">
+			<source src={audioCriesSrc} type="audio/ogg">
+		  </audio>
+		</div>
+  
+		<div class="flex items-center justify-center pt-4">
+		  <!-- Botón -->
+		  <a class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 no-underline" href="/">
+			Regresar
+		  </a>
+		</div>
+	  </section>
+	</MainLayout>
+  )}
+

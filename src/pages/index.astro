@@ -10,7 +10,7 @@ const title = 'Pokemon app creada por Danlois';
 import type {PokemonListResponse} from '../interfaces/pokemonInterfacesListResponse';
 
 /* conexion a la api: */
-const response = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=24');
+const response = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=102');
 const data = await response.json() as PokemonListResponse;
 
 /* importar componetes */
